@@ -81,16 +81,16 @@ export function renderWhyCard(patterns) {
           <p class="muted">${pattern.summary || "이 패턴의 핵심 구조를 확인하세요."}</p>
 
           <p><strong>핵심 규칙</strong></p>
-          <p>${pattern.rule.replaceAll("\\n", "<br>")}</p>
+          <p>${formatMultiline(pattern.rule)}</p>
 
           <p><strong>함정 포인트</strong></p>
           <ul>
-            ${pattern.traps.map(trap => `<li>${trap}</li>`).join("")}
+            ${(pattern.traps || []).map(trap => `<li>${escapeHTML(trap)}</li>`).join("")}
           </ul>
 
           <p><strong>다음 판별 질문</strong></p>
           <ul>
-            ${pattern.questions.map(q => `<li>${q}</li>`).join("")}
+            ${(pattern.questions || []).map(q => `<li>${escapeHTML(q)}</li>`).join("")}
           </ul>
         </section>
       `).join("")}
