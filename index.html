@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grammar Engine</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Pattern-Based Grammar Trainer</p>
+      <h1>Grammar Engine</h1>
+      <p class="subtitle">문장을 외우는 대신, 어법 패턴을 판별하고 설명하는 학습 엔진</p>
+    </div>
+    <div class="header-card">
+      <strong id="todayCount">0</strong>
+      <span>오늘 학습 기록</span>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <nav class="tabs" aria-label="학습 모드">
+      <button class="tab-button active" data-tab="analyze">문장 분석</button>
+      <button class="tab-button" data-tab="quiz">패턴 퀴즈</button>
+      <button class="tab-button" data-tab="review">저장/오답</button>
+      <button class="tab-button" data-tab="stats">약점 분석</button>
+      <button class="tab-button" data-tab="patterns">패턴 DB</button>
+    </nav>
+
+    <section class="panel active" id="panel-analyze">
+      <div class="panel-grid">
+        <article class="card main-card">
+          <h2>문장 입력 분석</h2>
+          <p class="muted">문장을 입력하면 가능한 어법 패턴 후보와 판별 질문을 보여줍니다. 정답 확정이 아니라 “사고 경로 훈련”용입니다.</p>
+          <textarea id="sentenceInput" placeholder="예: It is necessary for people entering the laboratory to wear protective clothing."></textarea>
+          <div class="button-row">
+            <button id="analyzeBtn" class="primary">분석 시작</button>
+            <button id="saveSentenceBtn">문장 저장</button>
+            <button id="clearInputBtn" class="ghost">비우기</button>
+          </div>
+        </article>
+
+        <aside class="card">
+          <h3>학습 순서</h3>
+          <ol class="mini-steps">
+            <li>패턴 후보를 확인합니다.</li>
+            <li>판별 질문에 답합니다.</li>
+            <li>함정 포인트를 설명합니다.</li>
+            <li>저장 후 나중에 다시 풉니다.</li>
+          </ol>
+        </aside>
+      </div>
+
+      <div id="analysisResult" class="result-list"></div>
+    </section>
+
+    <section class="panel" id="panel-quiz">
+      <article class="card main-card">
+        <div class="section-title-row">
+          <div>
+            <h2>패턴 퀴즈</h2>
+            <p class="muted">예문을 보고 핵심 패턴을 고르세요. 맞히는 것보다 “왜 그런지”가 중요합니다.</p>
+          </div>
+          <button id="newQuizBtn" class="primary">새 문제</button>
+        </div>
+        <div id="quizBox" class="quiz-box"></div>
+      </article>
+    </section>
+
+    <section class="panel" id="panel-review">
+      <article class="card main-card">
+        <div class="section-title-row">
+          <div>
+            <h2>저장 문장 / 오답 복습</h2>
+            <p class="muted">localStorage에 저장됩니다. 같은 브라우저에서는 새로고침해도 유지됩니다.</p>
+          </div>
+          <div class="button-row">
+            <button id="exportBtn">내보내기</button>
+            <button id="clearDataBtn" class="danger">전체 삭제</button>
+          </div>
+        </div>
+        <div id="reviewList" class="saved-list"></div>
+      </article>
+    </section>
+
+    <section class="panel" id="panel-stats">
+      <article class="card main-card">
+        <h2>약점 분석</h2>
+        <p class="muted">틀린 기록과 저장 기록을 바탕으로 약한 패턴을 간단히 보여줍니다.</p>
+        <div id="statsBox" class="stats-grid"></div>
+      </article>
+    </section>
+
+    <section class="panel" id="panel-patterns">
+      <article class="card main-card">
+        <div class="section-title-row">
+          <div>
+            <h2>패턴 DB</h2>
+            <p class="muted">현재 35개 패턴이 들어 있습니다. 나중에 P36, P37처럼 추가하면 그대로 확장됩니다.</p>
+          </div>
+          <input id="patternSearch" class="search-input" placeholder="패턴 검색: 관계사, that, 수동태..." />
+        </div>
+        <div id="patternList" class="pattern-list"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Grammar Engine v1</span>
+    <span>GitHub Pages ready · localStorage 기반</span>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
