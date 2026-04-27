@@ -3,6 +3,7 @@ import { examples } from "./examples.js";
 import { patterns } from "./patterns.js";
 import { saveAttempt } from "./storage.js";
 import { escapeHTML } from "./feedback.js";
+import { renderWhyCard } from "./feedback.js";
 
 function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -79,3 +80,16 @@ export function createQuiz(container) {
     });
   });
 }
+
+const correctPatternObjects = example.patterns
+  .map(id => patterns.find(pattern => pattern.id === id))
+  .filter(Boolean);
+
+document.getElementById("quizFeedback").innerHTML = `
+  <div class="pattern-card">
+    <h3>${isCorrect ? "정답입니다 ✨" : "조금 더 확인해 봐요 🧠"}</h3>
+    <p>정답 패턴: <strong>${correctNames}</strong></p>
+  </div>
+
+  ${renderWhyCard(correctPatternObjects)}
+`;
