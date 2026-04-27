@@ -64,3 +64,36 @@ export function escapeHTML(value) {
 export function formatMultiline(value) {
   return escapeHTML(value || "").replaceAll("\\n", "<br>");
 }
+
+export function renderWhyCard(patterns) {
+  return `
+    <div class="pattern-card">
+      <h3>Why Card 🧠</h3>
+      ${patterns.map(pattern => `
+        <section>
+          <div class="badge-row">
+            <span class="badge">${pattern.id}</span>
+          </div>
+
+          <h4>${pattern.name}</h4>
+
+          <p><strong>왜 이 패턴인가?</strong></p>
+          <p class="muted">${pattern.summary || "이 패턴의 핵심 구조를 확인하세요."}</p>
+
+          <p><strong>핵심 규칙</strong></p>
+          <p>${pattern.rule.replaceAll("\\n", "<br>")}</p>
+
+          <p><strong>함정 포인트</strong></p>
+          <ul>
+            ${pattern.traps.map(trap => `<li>${trap}</li>`).join("")}
+          </ul>
+
+          <p><strong>다음 판별 질문</strong></p>
+          <ul>
+            ${pattern.questions.map(q => `<li>${q}</li>`).join("")}
+          </ul>
+        </section>
+      `).join("")}
+    </div>
+  `;
+}
