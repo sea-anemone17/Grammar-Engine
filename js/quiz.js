@@ -61,14 +61,20 @@ export function createQuiz(container) {
         .map(p => `${p.id} ${p.name}`)
         .join(", ");
 
-      document.getElementById("quizFeedback").innerHTML = `
-        <div class="pattern-card">
-          <h3>${isCorrect ? "정답입니다 ✨" : "조금 더 확인해 봐요 🧠"}</h3>
-          <p>정답 패턴: <strong>${escapeHTML(correctNames)}</strong></p>
-          <p class="muted">다음 단계: 왜 이 패턴인지 “판별 질문”으로 설명해 보세요.</p>
-        </div>
-      `;
+      const correctPatternObjects = example.patterns
+       .map(id => patterns.find(pattern => pattern.id === id))
+       .filter(Boolean);
 
+      document.getElementById("quizFeedback").innerHTML = `
+       <div class="pattern-card">
+         <h3>${isCorrect ? "정답입니다 ✨" : "조금 더 확인해 봐요 🧠"}</h3>
+         <p>정답 패턴: <strong>${escapeHTML(correctNames)}</strong></p>
+         <p class="muted">다음 단계: 왜 이 패턴인지 “판별 질문”으로 설명해 보세요.</p>
+       </div>
+
+       ${renderWhyCard(correctPatternObjects)}
+      `;
+      
       saveAttempt({
         mode: "quiz",
         sentenceId: example.id,
@@ -80,16 +86,3 @@ export function createQuiz(container) {
     });
   });
 }
-
-const correctPatternObjects = example.patterns
-  .map(id => patterns.find(pattern => pattern.id === id))
-  .filter(Boolean);
-
-document.getElementById("quizFeedback").innerHTML = `
-  <div class="pattern-card">
-    <h3>${isCorrect ? "정답입니다 ✨" : "조금 더 확인해 봐요 🧠"}</h3>
-    <p>정답 패턴: <strong>${correctNames}</strong></p>
-  </div>
-
-  ${renderWhyCard(correctPatternObjects)}
-`;
